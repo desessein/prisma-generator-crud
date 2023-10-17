@@ -7,28 +7,48 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+model Dependente {
+  id                 Int      @id @default(autoincrement())
 
-model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  cid String?
+  cidDataLaudo DateTime?
+  cidDataInicio DateTime?
+
+  pessoaDependente   Pessoa[] @relation(name: "PessoaDependente")
+  pessoaTitular Pessoa[] @relation(name: "PessoaDependenteTitular")
+
+  dependenteTipo DependenteParentesco[]
+  dependenteParentesco DependenteCondicao[]
 }
 
-enum NotificationType {
-  newPosts
-  newComments
-  newFollowers
-  reply
-  heartOnPost
-  heartOnComment
-  heartOnReply
+model DependenteParentesco {
+  id                 Int      @id @default(autoincrement())
+
+  valor String?
+  label String?
+
+  dependente   Dependente[]
 }
 
-enum Language {
-  Typescript
-  Javascript
-  Rust
-  Go
-  Python
-  Cpp
+model DependenteCondicao {
+  id                 Int      @id @default(autoincrement())
+
+  valor String?
+  label String?
+
+  dependente   Dependente[]
+}
+
+
+model Pessoa {
+  id                              Int       @id @default(autoincrement())
+  nome                            String?
+  dataNasc                       DateTime?
+  nomeMae                        String?
+  nomePai                        String?
+  sexo                            String?
+  estadoCivil                    String?
+  
+  dependente   Dependente[] @relation(name: "PessoaDependente")
+  dependenteTitular Dependente[] @relation(name: "PessoaDependenteTitular")
 }
