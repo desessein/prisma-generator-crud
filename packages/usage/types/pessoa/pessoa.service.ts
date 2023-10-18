@@ -46,7 +46,7 @@ export class PessoaService {
     async get(data: GetPessoa): Promise<GetPessoaResponse> {
 
                     try {
-                      const result = await this.prismaService.pessoa.findUniqueOrThrow({
+                      const result = await this.prismaService.pessoa.findUnique({
                         where: { id: Number(data.id) },
                       })
                   

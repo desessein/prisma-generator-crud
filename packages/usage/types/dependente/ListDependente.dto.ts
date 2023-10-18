@@ -7,10 +7,6 @@ export class ListDependente {
     pessoaTitularIds!: number[];
     dependenteTipoIds!: number[];
     dependenteParentescoIds!: number[];
-    idInclude!: boolean;
-    cidInclude!: boolean;
-    cidDataLaudoInclude!: boolean;
-    cidDataInicioInclude!: boolean;
     pessoaDependenteInclude!: boolean;
     pessoaTitularInclude!: boolean;
     dependenteTipoInclude!: boolean;

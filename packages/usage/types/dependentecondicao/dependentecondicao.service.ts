@@ -37,7 +37,7 @@ export class DependenteCondicaoService {
     async get(data: GetDependenteCondicao): Promise<GetDependenteCondicaoResponse> {
 
                     try {
-                      const result = await this.prismaService.dependenteCondicao.findUniqueOrThrow({
+                      const result = await this.prismaService.dependenteCondicao.findUnique({
                         where: { id: Number(data.id) },
                       })
                   
