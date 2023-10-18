@@ -54,7 +54,7 @@ export class DependenteService {
 
                     try {
                       const result = await this.prismaService.dependente.findUniqueOrThrow({
-                        where: { id: data.id },
+                        where: { id: Number(data.id) },
                       })
                   
                       return {
@@ -124,7 +124,7 @@ export class DependenteService {
 
                     try {
                       await this.prismaService.dependente.delete({
-                        where: { id: data.id },
+                        where: { id: Number(data.id) },
                       })
 
                       return {
@@ -144,7 +144,7 @@ export class DependenteService {
 
                     try {
                         const result = await this.prismaService.dependente.update({ 
-                            where: { id: data.id },
+                            where: { id: Number(data.id) },
                             data: {
                                 cid: data.cid,
         cidDataLaudo: data.cidDataLaudo,

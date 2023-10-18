@@ -1,3 +1,3 @@
 export class DeleteDependenteCondicao {
-    id: number;
+    id!: number;
 }

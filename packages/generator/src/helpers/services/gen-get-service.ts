@@ -73,8 +73,8 @@ export function genGetService({
     returnType: `Promise<Get${model.name}Response>`,
     statements: `
             try {
-              const result = await this.prismaService.${camelCaseName}.findUniqueOrThrow({
-                where: { id: data.id },
+              const result = await this.prismaService.${camelCaseName}.findUnique({
+                where: { id: Number(data.id) },
               })
           
               return {

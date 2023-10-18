@@ -10,7 +10,7 @@ export class DependenteCondicaoController {
     }
 
     @Post('list')
-    async list(@Body body: ListDependenteCondicao): Promise<ListDependenteCondicaoResponse> {
+    async list(@Body() body: ListDependenteCondicao): Promise<ListDependenteCondicaoResponse> {
         return firstValueFrom(this.proxy.list(body as ListDependenteCondicao));
     }
 
@@ -20,7 +20,7 @@ export class DependenteCondicaoController {
     }
 
     @Put(':id')
-    async update(@Param('id') id: number, @Body body: UpdateDependenteCondicao): Promise<UpdateDependenteCondicaoResponse> {
+    async update(@Param('id') id: number, @Body() body: UpdateDependenteCondicao): Promise<UpdateDependenteCondicaoResponse> {
         return firstValueFrom(this.proxy.update({ id, ...body } as UpdateDependenteCondicao));
     }
 
@@ -30,7 +30,7 @@ export class DependenteCondicaoController {
     }
 
     @Post('')
-    async create(@Body body: CreateDependenteCondicao): Promise<CreateDependenteCondicaoResponse> {
+    async create(@Body() body: CreateDependenteCondicao): Promise<CreateDependenteCondicaoResponse> {
         return firstValueFrom(this.proxy.create(body as CreateDependenteCondicao));
     }
 }

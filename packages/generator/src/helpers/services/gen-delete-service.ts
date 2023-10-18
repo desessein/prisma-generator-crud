@@ -74,7 +74,7 @@ export function genDeleteService({
     statements: `
             try {
               await this.prismaService.${camelCaseName}.delete({
-                where: { id: data.id },
+                where: { id: Number(data.id) },
               })
 
               return {

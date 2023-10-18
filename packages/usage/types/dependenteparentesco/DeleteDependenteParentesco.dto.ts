@@ -1,3 +1,3 @@
 export class DeleteDependenteParentesco {
-    id: number;
+    id!: number;
 }

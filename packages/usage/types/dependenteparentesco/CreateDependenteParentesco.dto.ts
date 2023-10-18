@@ -1,5 +1,5 @@
 export class CreateDependenteParentesco {
-    valor: string;
-    label: string;
-    dependenteIds: number[];
+    valor!: string;
+    label!: string;
+    dependenteIds!: number[];
 }

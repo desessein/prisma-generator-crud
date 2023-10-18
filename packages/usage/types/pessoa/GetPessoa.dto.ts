@@ -1,3 +1,3 @@
 export class GetPessoa {
-    id: number;
+    id!: number;
 }

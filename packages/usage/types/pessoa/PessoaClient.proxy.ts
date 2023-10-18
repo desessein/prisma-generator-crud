@@ -2,7 +2,7 @@ import { CreatePessoa, CreatePessoaResponse, CreatePessoaIdentifier, GetPessoa, 
 import { ClientProxy } from "@nestjs/microservices";
 import { Observable } from "rxjs";
 
-class PessoaClientProxy {
+export class PessoaClientProxy {
     private client: ClientProxy;
 
     constructor(client: ClientProxy) {

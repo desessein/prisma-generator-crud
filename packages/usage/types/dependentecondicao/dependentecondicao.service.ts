@@ -38,7 +38,7 @@ export class DependenteCondicaoService {
 
                     try {
                       const result = await this.prismaService.dependenteCondicao.findUniqueOrThrow({
-                        where: { id: data.id },
+                        where: { id: Number(data.id) },
                       })
                   
                       return {
@@ -103,7 +103,7 @@ export class DependenteCondicaoService {
 
                     try {
                       await this.prismaService.dependenteCondicao.delete({
-                        where: { id: data.id },
+                        where: { id: Number(data.id) },
                       })
 
                       return {
@@ -123,7 +123,7 @@ export class DependenteCondicaoService {
 
                     try {
                         const result = await this.prismaService.dependenteCondicao.update({ 
-                            where: { id: data.id },
+                            where: { id: Number(data.id) },
                             data: {
                                 valor: data.valor,
         label: data.label,

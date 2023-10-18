@@ -10,7 +10,7 @@ export class PessoaController {
     }
 
     @Post('list')
-    async list(@Body body: ListPessoa): Promise<ListPessoaResponse> {
+    async list(@Body() body: ListPessoa): Promise<ListPessoaResponse> {
         return firstValueFrom(this.proxy.list(body as ListPessoa));
     }
 
@@ -20,7 +20,7 @@ export class PessoaController {
     }
 
     @Put(':id')
-    async update(@Param('id') id: number, @Body body: UpdatePessoa): Promise<UpdatePessoaResponse> {
+    async update(@Param('id') id: number, @Body() body: UpdatePessoa): Promise<UpdatePessoaResponse> {
         return firstValueFrom(this.proxy.update({ id, ...body } as UpdatePessoa));
     }
 
@@ -30,7 +30,7 @@ export class PessoaController {
     }
 
     @Post('')
-    async create(@Body body: CreatePessoa): Promise<CreatePessoaResponse> {
+    async create(@Body() body: CreatePessoa): Promise<CreatePessoaResponse> {
         return firstValueFrom(this.proxy.create(body as CreatePessoa));
     }
 }

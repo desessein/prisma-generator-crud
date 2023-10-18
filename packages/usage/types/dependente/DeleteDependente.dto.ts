@@ -1,3 +1,3 @@
 export class DeleteDependente {
-    id: number;
+    id!: number;
 }

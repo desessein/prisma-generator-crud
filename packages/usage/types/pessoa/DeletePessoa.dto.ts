@@ -1,3 +1,3 @@
 export class DeletePessoa {
-    id: number;
+    id!: number;
 }

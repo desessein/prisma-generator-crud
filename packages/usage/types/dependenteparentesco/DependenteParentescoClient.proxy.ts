@@ -2,7 +2,7 @@ import { CreateDependenteParentesco, CreateDependenteParentescoResponse, CreateD
 import { ClientProxy } from "@nestjs/microservices";
 import { Observable } from "rxjs";
 
-class DependenteParentescoClientProxy {
+export class DependenteParentescoClientProxy {
     private client: ClientProxy;
 
     constructor(client: ClientProxy) {

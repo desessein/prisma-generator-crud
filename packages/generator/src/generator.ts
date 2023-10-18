@@ -17,6 +17,7 @@ import {
   genClassIndexDto,
   generateResponseClasses,
   Class,
+generateIdentifiersClasses,
 } from './helpers/dto'
 import { writeTSClass } from './helpers/dto/gen-class-dto'
 import {
@@ -27,6 +28,10 @@ import {
   genListService,
   genUpdateService,
 } from './helpers/services'
+import { generateControllerFile } from './helpers/controller'
+import { generateModuleFile } from './helpers/module'
+import { generateDependenteClientProxy } from './helpers/proxy-client'
+import { generateGatewayControllerFile } from './helpers/gateway'
 import { SourceFile } from 'ts-morph'
 
 const { version } = require('../package.json')
@@ -52,7 +57,7 @@ generatorHandler({
 
       const classes = [createCLS, deleteCLS, getCLS, listCLS, updateCLS]
 
-      // Input Classes
+      // Dto Classes
       classes.forEach(cls => {
         writeTSClass({
           outputPath: options.generator.output?.value!,
@@ -75,6 +80,16 @@ generatorHandler({
       })
       generateResponseClasses(model.name, options.generator.output?.value!)
 
+      // Identifiers Classes
+      genClassIndexDto({
+        outputPath: options.generator.output?.value!,
+        exports: `./${model.name.toLowerCase()}/${model.name}Identifiers.dto`
+      })
+      generateIdentifiersClasses(model.name, options.generator.output?.value!)
+
+      // Controller Class
+      generateControllerFile(model.name, options.generator.output?.value!)
+
       // Services
       generateServices({
         outputPath: options.generator.output?.value!,
@@ -85,6 +100,28 @@ generatorHandler({
         listCLS,
         updateCLS,
       })
+
+      // Module
+      genClassIndexDto({
+        outputPath: options.generator.output?.value!,
+        exports: `./${model.name.toLowerCase()}/${model.name.toLowerCase()}.module`
+      })
+      generateModuleFile(model.name, options.generator.output?.value!)
+
+      // Gateway
+      genClassIndexDto({
+        outputPath: options.generator.output?.value!,
+        exports: `./${model.name.toLowerCase()}/${model.name.toLowerCase()}.gateway`
+      })
+      generateGatewayControllerFile(model.name, options.generator.output?.value!)
+
+
+      // Module
+      genClassIndexDto({
+        outputPath: options.generator.output?.value!,
+        exports: `./${model.name.toLowerCase()}/${model.name}Client.proxy`
+      })
+      generateDependenteClientProxy(model.name, options.generator.output?.value!)
     })
   },
 })

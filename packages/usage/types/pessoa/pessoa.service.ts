@@ -47,7 +47,7 @@ export class PessoaService {
 
                     try {
                       const result = await this.prismaService.pessoa.findUniqueOrThrow({
-                        where: { id: data.id },
+                        where: { id: Number(data.id) },
                       })
                   
                       return {
@@ -121,7 +121,7 @@ export class PessoaService {
 
                     try {
                       await this.prismaService.pessoa.delete({
-                        where: { id: data.id },
+                        where: { id: Number(data.id) },
                       })
 
                       return {
@@ -141,7 +141,7 @@ export class PessoaService {
 
                     try {
                         const result = await this.prismaService.pessoa.update({ 
-                            where: { id: data.id },
+                            where: { id: Number(data.id) },
                             data: {
                                 nome: data.nome,
         dataNasc: data.dataNasc,

@@ -1,6 +1,6 @@
 export class UpdateDependenteCondicao {
-    id: number;
-    valor: string;
-    label: string;
-    dependenteIds: number[];
+    id!: number;
+    valor!: string;
+    label!: string;
+    dependenteIds!: number[];
 }

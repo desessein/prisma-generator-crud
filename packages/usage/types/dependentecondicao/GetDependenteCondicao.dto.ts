@@ -1,3 +1,3 @@
 export class GetDependenteCondicao {
-    id: number;
+    id!: number;
 }

@@ -10,7 +10,7 @@ export class DependenteController {
     }
 
     @Post('list')
-    async list(@Body body: ListDependente): Promise<ListDependenteResponse> {
+    async list(@Body() body: ListDependente): Promise<ListDependenteResponse> {
         return firstValueFrom(this.proxy.list(body as ListDependente));
     }
 
@@ -20,7 +20,7 @@ export class DependenteController {
     }
 
     @Put(':id')
-    async update(@Param('id') id: number, @Body body: UpdateDependente): Promise<UpdateDependenteResponse> {
+    async update(@Param('id') id: number, @Body() body: UpdateDependente): Promise<UpdateDependenteResponse> {
         return firstValueFrom(this.proxy.update({ id, ...body } as UpdateDependente));
     }
 
@@ -30,7 +30,7 @@ export class DependenteController {
     }
 
     @Post('')
-    async create(@Body body: CreateDependente): Promise<CreateDependenteResponse> {
+    async create(@Body() body: CreateDependente): Promise<CreateDependenteResponse> {
         return firstValueFrom(this.proxy.create(body as CreateDependente));
     }
 }

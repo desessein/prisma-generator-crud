@@ -23,7 +23,8 @@ export function writeTSClass({ outputPath, cls, model }: {
     cls.fields.forEach(field => {
         classDeclaration.addProperty({
             name: field.name,
-            type: field.type
+            type: field.type,
+            hasExclamationToken: true
         })
     })
 

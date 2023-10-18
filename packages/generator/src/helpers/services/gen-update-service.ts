@@ -77,7 +77,7 @@ export function genUpdateService({
     statements: `
             try {
                 const result = await this.prismaService.${camelCaseName}.update({ 
-                    where: { id: data.id },
+                    where: { id: Number(data.id) },
                     data: {
                         ${data},
                         ${relationFields}

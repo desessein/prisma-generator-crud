@@ -38,7 +38,7 @@ export class DependenteParentescoService {
 
                     try {
                       const result = await this.prismaService.dependenteParentesco.findUniqueOrThrow({
-                        where: { id: data.id },
+                        where: { id: Number(data.id) },
                       })
                   
                       return {
@@ -103,7 +103,7 @@ export class DependenteParentescoService {
 
                     try {
                       await this.prismaService.dependenteParentesco.delete({
-                        where: { id: data.id },
+                        where: { id: Number(data.id) },
                       })
 
                       return {
@@ -123,7 +123,7 @@ export class DependenteParentescoService {
 
                     try {
                         const result = await this.prismaService.dependenteParentesco.update({ 
-                            where: { id: data.id },
+                            where: { id: Number(data.id) },
                             data: {
                                 valor: data.valor,
         label: data.label,

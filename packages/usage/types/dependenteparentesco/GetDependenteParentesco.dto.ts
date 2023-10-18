@@ -1,3 +1,3 @@
 export class GetDependenteParentesco {
-    id: number;
+    id!: number;
 }
