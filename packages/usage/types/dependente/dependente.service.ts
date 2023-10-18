@@ -1,7 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { Prisma } from "@prisma/client";
-import { PaginationModel } from "@prisma-utils/nestjs-prisma";
-import { PrismaService, Dependente } from "@org/prisma";
+import { PrismaService } from "@org/prisma";
 import { ApiError, CreateDependente, CreateDependenteResponse, GetDependente, GetDependenteResponse, ListDependente, ListDependenteResponse, DeleteDependente, DeleteDependenteResponse, UpdateDependente, UpdateDependenteResponse } from "@org/clients";
 
 @Injectable()
