@@ -5,3 +5,4 @@ build
 pnpm-debug.log
 .env*
 .history
+packages/usage/types

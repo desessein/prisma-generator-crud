@@ -48,7 +48,12 @@ generatorHandler({
   onGenerate: async (options: GeneratorOptions) => {
     logger.info(`${GENERATOR_NAME}:Generating test`)
 
+
     options.dmmf.datamodel.models.forEach(async (model) => {
+      if(model.name.toLowerCase() != 'TabelaAuxiliarVerba'.toLowerCase()) {
+        return;
+      }
+
       const createCLS = genCreateInputDto(model)
       const deleteCLS = genDeleteInputDto(model)
       const getCLS = genGetInputDto(model)
@@ -90,7 +95,7 @@ generatorHandler({
       // Controller Class
       generateControllerFile(model.name, options.generator.output?.value!)
 
-      // Services
+      // // Services
       generateServices({
         outputPath: options.generator.output?.value!,
         model,
@@ -101,14 +106,14 @@ generatorHandler({
         updateCLS,
       })
 
-      // Module
+      // // Module
       genClassIndexDto({
         outputPath: options.generator.output?.value!,
         exports: `./${model.name.toLowerCase()}/${model.name.toLowerCase()}.module`
       })
       generateModuleFile(model.name, options.generator.output?.value!)
 
-      // Gateway
+      // // Gateway
       genClassIndexDto({
         outputPath: options.generator.output?.value!,
         exports: `./${model.name.toLowerCase()}/${model.name.toLowerCase()}.gateway`
@@ -116,7 +121,7 @@ generatorHandler({
       generateGatewayControllerFile(model.name, options.generator.output?.value!)
 
 
-      // Module
+      // // Proxy
       genClassIndexDto({
         outputPath: options.generator.output?.value!,
         exports: `./${model.name.toLowerCase()}/${model.name}Client.proxy`

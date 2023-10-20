@@ -1,5 +1,0 @@
-export const CreateDependenteParentescoIdentifier = "CreateDependenteParentescoIdentifier";
-export const UpdateDependenteParentescoIdentifier = "UpdateDependenteParentescoIdentifier";
-export const DeleteDependenteParentescoIdentifier = "DeleteDependenteParentescoIdentifier";
-export const ListDependenteParentescoIdentifier = "FindDependenteParentescoIdentifierById";
-export const GetDependenteParentescoIdentifier = "FindAllDependenteParentescoIdentifiers";

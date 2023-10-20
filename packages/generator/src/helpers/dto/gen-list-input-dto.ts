@@ -29,18 +29,20 @@ export function genListInputDto(model: DMMF.Model): Class {
         field,
     } as Field))
 
-    const includeFields = model.fields.map(field => ({
+    const includeFields = model.fields.filter(field => field.relationName !== undefined)
+
+    const incFields = includeFields.map(field => ({
         name: field.name + 'Include',
         type: 'boolean',
         optional: true,
-        isInclude: true,
+        isInclude: true
     } as Field))
 
     const cls: Class = {
         name: getClassName({model, prefix: 'List'}),
         fields: [
             ...fields,
-            ...includeFields,
+            ...incFields,
             {
                 name: 'take',
                 type: 'number',

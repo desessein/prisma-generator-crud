@@ -24,7 +24,7 @@ export function writeTSClass({ outputPath, cls, model }: {
         classDeclaration.addProperty({
             name: field.name,
             type: field.type,
-            hasExclamationToken: true
+            hasQuestionToken: true,
         })
     })
 

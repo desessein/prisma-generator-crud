@@ -83,11 +83,11 @@ export function genListService({
                         where: {
                             ${data}
                         },
-                        include: {
+                        ${include ? `include: {
                           ${include}
-                        },
+                        },` : ''}
                         take: data?.take,
-                        skip: data?.skip,
+                        skip: data?.skip && data?.take ? (data?.skip - 1) * data?.take : undefined,
                     }),
                     this.prismaService.${camelCaseName}.count({ where: {
                         ${countData}

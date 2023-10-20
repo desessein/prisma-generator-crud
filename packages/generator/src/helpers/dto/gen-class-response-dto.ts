@@ -13,8 +13,8 @@ export function generateResponseClasses(entityName: string, filePath: string) {
     // Define class names and their response types
     const classes = [
         { name: 'Create', type: `${entityName}` },
-        { name: 'List', type: `PaginationModel<${entityName}>` },
-        { name: 'Delete', type: `void` },
+        { name: 'List', type: `{ items: ${entityName}[]; meta: { totalItems: number; items: number; totalPages: number; page: number; }; }`, },
+        { name: 'Delete', type: `any` },
         { name: 'Update', type: `${entityName}` },
         { name: 'Get', type: `${entityName}` }
     ];
@@ -31,11 +31,6 @@ export function generateResponseClasses(entityName: string, filePath: string) {
             }]
         });
     }
-
-    sourceFile.addImportDeclaration({
-        moduleSpecifier: '@prisma-utils/nestjs-prisma',
-        namedImports: ['PaginationModel']
-    });
     
     sourceFile.addImportDeclaration({
         moduleSpecifier: '@org/prisma',
