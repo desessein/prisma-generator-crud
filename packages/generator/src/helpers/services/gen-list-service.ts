@@ -81,6 +81,7 @@ export function genListService({
                   const [items, count] = await this.prismaService.$transaction([
                     this.prismaService.${camelCaseName}.findMany({
                         where: {
+                            id: data.id,
                             ${data}
                         },
                         ${include ? `include: {

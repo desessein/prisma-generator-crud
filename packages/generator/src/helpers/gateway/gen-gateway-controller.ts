@@ -4,7 +4,7 @@ import { Project, Scope } from 'ts-morph';
 export function generateGatewayControllerFile(entityName: string, filePath: string) {
     const project = new Project();
 
-    const outPath = path.join(filePath, entityName.toLowerCase(), entityName.toLowerCase() + '.gateway.ts')
+    const outPath = path.join(filePath, entityName.toLowerCase(), entityName.toLowerCase() + '-gateway.controller.ts')
 
     const sourceFile = project.createSourceFile(outPath, "", { overwrite: true });
     

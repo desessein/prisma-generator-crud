@@ -8,225 +8,145 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Token {
-  id         Int       @id @default(autoincrement())
-  token      String    @unique
-  usuarioId    Int
+  id        Int       @id @default(autoincrement())
+  token     String    @unique
+  usuarioId Int
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
-  user       Usuario   @relation(fields: [usuarioId], references: [id])
+  user      Usuario   @relation(fields: [usuarioId], references: [id])
 }
 
 model Usuario {
-  id         Int       @id @default(autoincrement())
-  email      String    @unique
-  nome       String?
-  senha   String?
-  nivel      Int?
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  nome      String?
+  senha     String?
+  nivel     Int?
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
-  Token      Token[]
-}
-
-model Raca {
-  id        Int      @id @default(autoincrement())
-  descricao String?
-  pessoas   Pessoa[]
-}
-
-model Escolaridade {
-  id        Int      @id @default(autoincrement())
-  descricao String?
-  pessoas   Pessoa[]
-}
-
-model EstadoCivil {
-  id        Int     @id @default(autoincrement())
-  nome      String
-  descricao String? 
-}
-
-model UF {
-  id           Int            @id @default(autoincrement())
-  nome         String
-  sigla        String 
-  regiao       String 
-  Naturalidade Naturalidade[]
-}
-
-model Naturalidade {
-  id       Int    @id @default(autoincrement())
-  nome     String
-  estado   UF     @relation(fields: [estadoId], references: [id])
-  estadoId Int
-}
-
-model Nacionalidade {
-  id        Int     @id @default(autoincrement())
-  nome      String
-  codigo    String? 
-  descricao String? 
-}
-
-model Pais {
-  id        Int        @id @default(autoincrement())
-  nome      String?
-  exteriors Exterior[]
-}
-
-model Cidade {
-  id        Int        @id @default(autoincrement())
-  nome      String?
-  enderecos Endereco[]
-}
-
-
-model PlanoSaude {
-  id        Int      @id @default(autoincrement())
-  nome      String?
-  descricao String?
-  pessoas   Pessoa[]
-}
-
-model TipoSanguineo {
-  id      Int      @id @default(autoincrement())
-  tipo    String?
-  pessoas Pessoa[]
-}
-
-model RegimeCasamento {
-  id        Int      @id @default(autoincrement())
-  tipo      String?
-  descricao String?
-  pessoas   Pessoa[]
-}
-
-model TipoLogradouro {
-  id        Int        @id @default(autoincrement())
-  tipo      String?
-  descricao String?
-  enderecos Endereco[]
-}
-
-model NecessidadesEspeciais {
-  id        Int      @id @default(autoincrement())
-  tipo      String?
-  descricao String?
-  pessoas   Pessoa[]
+  Token     Token[]
 }
 
 model Pessoa {
-  id                              Int       @id @default(autoincrement())
-  nome                            String?
-  dataNasc                       DateTime?
-  nomeMae                        String?
-  nomePai                        String?
-  sexo                            String?
-  estadoCivil                    String?
-  pis                             String?
-  nit                             String?
-  email1                          String?
-  email2                          String?
-  obs                             String?
-  nacionalidade                   String?
-  foto                            String? 
-  apelido                         String?
-  especializacao                  String?
-  passaporte                      String?
-  reservista                      String?
-  planoSaudeDepQtd             Int?
-  regimeCasamento                String?
+  id                            Int       @id @default(autoincrement())
+  nome                          String?
+  dataNascimento                      DateTime?
+  nomeMae                       String?
+  nomePai                       String?
+  sexo                          String?
+  nit                           String?
+  foto                          String?
+  nomeSocial                       String?
+  especializacao                String?
+  passaporte                    String?
+  reservista                    String?
+  planoSaudeDepQtd              Int?
   portadorNecessidadesEspeciais Boolean?
-  idade                           Int?
-  nis                             String?
+  idade                         Int?
+  nis                           String?
+  email1                        String?
+  email2                        String?
+  observacao                           String?
+  portadorDeficiencia Boolean?
+  portadorMolestiaGrave Boolean?
+  portadorDoencaIncapacitante Boolean?
 
   cpf CPF[]
 
   contasBanco ContaBanco[]
-  contasPix ContaPix[]
+  contasPix   ContaPix[]
 
-  cnh   CNH?
-  cnhId Int?
+  cnh   CNH[]
 
-  carteira   CarteiraProfissional[]
-  raca    Raca[]
-  escolaridade    Escolaridade[]
-  endereco   Endereco[]
-  rg   RG[]
+  carteira CarteiraProfissional[]
+  endereco Endereco[]
+  rg       RG[]
   titulo   Titulo[]
-  ctps   CTPS[]
-  telefone   Telefone[]
-  saude   Saude[]
+  pisPasep          PisPasep[]
+  ctps     CTPS[]
+  contato Contato[]
+  saude    Saude[]
 
-  exterior                Exterior[]
-  PlanoSaude              PlanoSaude[]
-  TipoSanguineo           TipoSanguineo[]
-  RegimeCasamento         RegimeCasamento[]
-  NecessidadesEspeciais   NecessidadesEspeciais[]
+  exterior              Exterior[]
 
-  dadosJuridicos DadosJuridicos?
-  tipoPessoa TipoPessoa?
-  documentos Arquivo[]
+  dadosJuridicos DadosJuridicos[]
+  tipoPessoa     TipoPessoa[]
+  documentos     Arquivo[]
 
-  pessoaRepresentada   RepresentanteLegal[]  @relation(name: "PessoaRepresentada")
-  pessoaResponsavel RepresentanteLegal[]  @relation(name: "PessoaResponsavel")
+  pessoaRepresentada RepresentanteLegal[] @relation(name: "PessoaRepresentada")
+  pessoaResponsavel  RepresentanteLegal[] @relation(name: "PessoaResponsavel")
 
-  dependente   Dependente[] @relation(name: "PessoaDependente")
+  dependente        Dependente[] @relation(name: "PessoaDependente")
   dependenteTitular Dependente[] @relation(name: "PessoaDependenteTitular")
 
-  vinculo   Vinculo[]
+  vinculo Vinculo[]
+
+  estadoCivil       TabelaAuxiliarEstadoCivil[]
+  nacionalidade     TabelaAuxiliarNacionalidade[]
+  raca              TabelaAuxiliarRaca[]
+  uf                TabelaAuxiliarUF[]
+  naturalidade      TabelaAuxiliarNaturalidade[]
+  regimeCasamento   TabelaAuxiliarRegimeCasamento[]
+  escolaridade      TabelaAuxiliarEscolaridade[]
+}
+
+
+
+model PisPasep {
+  id Int @id @default(autoincrement())
+
+  numero String?
+  dataEmissao DateTime?
+  pessoa Pessoa[]
 }
 
 model Arquivo {
-  id          Int       @id @default(autoincrement())
-  
-  nome    String?
-  path        String?
-  mime    String?
-  tamanho        Int?
-  alt     String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id Int @id @default(autoincrement())
+
+  nome      String?
+  path      String?
+  mime      String?
+  tamanho   Int?
+  alt       String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   descricao String?
-  tags        String[]
+  tags      String[]
 
   Pessoa Pessoa[]
 }
 
 model TipoPessoa {
-  id        Int      @id @default(autoincrement())
-  
-  terceiroFisica Boolean?
+  id Int @id @default(autoincrement())
+
+  terceiroFisica   Boolean?
   terceiroJuridica Boolean?
 
-  Pessoa Pessoa @relation(fields: [pessoaId], references: [id])
-  pessoaId Int @unique
+  Pessoa   Pessoa[]
 }
 
 model DadosJuridicos {
-  id          Int      @id @default(autoincrement())
-  
-  cnpj        String?
-  razaoSocial String?
-  nomeFantasia String?
-  inscricaoEstadual String?
-  inscricaoMunicipal String?
-  dataAbertura DateTime?
-  dataEncerramento DateTime?
-  obs String?
+  id Int @id @default(autoincrement())
 
-  Pessoa Pessoa @relation(fields: [pessoaId], references: [id])
-  pessoaId Int @unique
+  cnpj               String?
+  razaoSocial        String?
+  nomeFantasia       String?
+  inscricaoEstadual  String?
+  inscricaoMunicipal String?
+  dataAbertura       DateTime?
+  dataEncerramento   DateTime?
+  obs                String?
+
+  Pessoa   Pessoa[]
 }
 
 model CPF {
   id       Int     @id @default(autoincrement())
   numero   String?
-  cpfMae  String? 
-  cpfPai  String? 
-  pessoa   Pessoa  @relation(fields: [pessoaId], references: [id])
-  pessoaId Int     
+  cpfMae   String?
+  cpfPai   String?
+  pessoa   Pessoa[]
 }
 
 model CNH {
@@ -234,8 +154,7 @@ model CNH {
   numero    String?
   categoria String?
   validade  DateTime?
-  pessoa    Pessoa    @relation(fields: [pessoaId], references: [id])
-  pessoaId  Int       @unique
+  pessoa    Pessoa[]
 }
 
 model CarteiraProfissional {
@@ -248,119 +167,123 @@ model CarteiraProfissional {
 }
 
 model Endereco {
-  id               Int             @id @default(autoincrement())
-  bairro       String?
-  endereco          String?
-  numero       String?
-  complemento  String?
-  descricao   String?
-  cep          String?
-  uf           String?
-  Cidade           Cidade?         @relation(fields: [cidadeId], references: [id])
-  cidadeId         Int?
-  TipoLogradouro   TipoLogradouro? @relation(fields: [tipoLogradouroId], references: [id])
-  tipoLogradouroId Int?
+  id               Int                            @id @default(autoincrement())
+  cep              String?
+  bairro           String?
+  numero           String?
+  endereco         String?
+  complemento      String?
+  observacao        String?
+  
   Pessoa           Pessoa[]
+  tipoLogradouro   TabelaAuxiliarTipoLogradouro[]
+  uf               TabelaAuxiliarUF[]
+  cidade           TabelaAuxiliarCidade[]
+  pais             TabelaAuxiliarPais[]
 }
 
 model RG {
   id            Int       @id @default(autoincrement())
-  rgNumero     String?
-  rgOrgao      String?
-  rgDataEmissao DateTime?
-  rgUF         String?
+  numero      String?
+  orgao       String?
+  dataExpedicao DateTime?
   Pessoa        Pessoa[]
+
+  uf    TabelaAuxiliarUF[]
 }
 
 model Titulo {
-  id           Int      @id @default(autoincrement())
-  tituloNr    String?
-  tituloZona  String?
-  tituloSecao String?
-  Pessoa       Pessoa[]
+  id          Int      @id @default(autoincrement())
+  numero    String?
+  zona  String?
+  secao String?
+  dataEmissao DateTime?
+  Pessoa      Pessoa[]
 }
 
 model CTPS {
-  id              Int       @id @default(autoincrement())
-  ctpsNumero     String?
-  ctpsSerie      String?
-  ctpsUf         String?
-  ctpsDataEmissao DateTime?
-  ctpsLocalExp  String?
+  id              Int                @id @default(autoincrement())
+  numero      String?
+  serie       String?
+  dataEmissao DateTime?
+  localExpedicao    String?
+  
+  Pessoa          Pessoa[]
+  uf              TabelaAuxiliarUF[]
+}
+
+model Contato {
+  id              Int      @id @default(autoincrement())
+  foneResidencial String?
+  foneCelular     String?
+  foneComercial  String?
+  email1         String?
+  email2         String?
+  observacoes   String?
+
   Pessoa          Pessoa[]
 }
 
-model Telefone {
+model Saude {
   id               Int      @id @default(autoincrement())
-  foneResidencial String?
-  foneCelular     String?
+  portadorMolestia Boolean?
+  planoSaude       String?
   Pessoa           Pessoa[]
 }
 
-model Saude {
-  id                Int      @id @default(autoincrement())
-  portadorMolestia Boolean?
-  planoSaude       String?
-  Pessoa            Pessoa[]
-}
-
 model Exterior {
-  id                    Int      @id @default(autoincrement())
-  caixaPostalExterior String?
+  id                   Int      @id @default(autoincrement())
+  caixaPostalExterior  String?
   cidadeExterior       String?
   estadoExterior       String?
   naturalidadeExterior String?
-  Pais                  Pais?    @relation(fields: [paisId], references: [id])
-  paisId                Int?
-  Pessoa                Pessoa[]
+  Pessoa               Pessoa[]
 }
 
 model ContaBanco {
-  id                 Int      @id @default(autoincrement())
-  banco              String?
-  bancoLabel         String?
-  agencia            String?
-  dv                 String? 
-  conta              String?  
-  op                 String? 
-  rateioBancario    Float?   
-  formaDePagamento String?
+  id               Int                            @id @default(autoincrement())
+  banco            String?
+  bancoLabel       String?
+  agencia          String?
+  dv               String?
+  conta            String?
+  op               String?
+  rateioBancario   Float?
+  formaDePagamento TabelaAuxiliarFormaPagamento[]
 
-
-  pessoa   Pessoa  @relation(fields: [pessoaId], references: [id])
-  pessoaId Int  
+  pessoa   Pessoa[]
 }
 
 model ContaPix {
-  id                 Int      @id @default(autoincrement())
-  chave              String?
-  tipoChave          String? // CNPJ, CPF, EMAIL, CELULAR, ALEATORIA
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+  id               Int                            @id @default(autoincrement())
+  chave            String?
+  tipoChave        String? // CNPJ, CPF, EMAIL, CELULAR, ALEATORIA
+  createdAt        DateTime                       @default(now())
+  updatedAt        DateTime                       @updatedAt
+  formaDePagamento TabelaAuxiliarFormaPagamento[]
 
-  pessoa   Pessoa  @relation(fields: [pessoaId], references: [id])
-  pessoaId Int 
+  pessoa   Pessoa[]
 }
 
 model RepresentanteLegal {
-  id                 Int      @id @default(autoincrement())
-  
-  pessoaRepresentada   Pessoa[] @relation(name: "PessoaRepresentada")
-  pessoaResponsavel Pessoa[] @relation(name: "PessoaResponsavel")
+  id Int @id @default(autoincrement())
 
-  tipoRepresentatividade RepresentanteLegalTipo[]
-  dataInicioRepresentatividade DateTime?
-  dataFimRepresentatividade DateTime?
+  pessoaRepresentada Pessoa[] @relation(name: "PessoaRepresentada")
+  pessoaResponsavel  Pessoa[] @relation(name: "PessoaResponsavel")
+
+  tipoRepresentatividade              RepresentanteLegalTipo[]
+  dataInicioRepresentatividade        DateTime?
+  dataFimRepresentatividade           DateTime?
   beneficioPagoParaRepresentanteLegal Boolean?
 }
 
 model RepresentanteLegalTipo {
-  id                 Int      @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
-  tipo String?
+  tipo      String?
   tipoLabel String?
-  
-  representanteLegal  RepresentanteLegal[]
+
+  representanteLegal RepresentanteLegal[]
 
   @@unique([tipo, tipoLabel])
 }
@@ -391,191 +314,19 @@ model Vinculo {
   gratificacoes Gratificacao[]
 }
 
-model Cargo {
+model Ocorrencias {
   id                 Int      @id @default(autoincrement())
 
-  matricula String? 
-  dataAdmissao DateTime? 
-  dataSituacaoFuncional DateTime? 
-
-  optantePrevidenciaComplementar Boolean?  
-  fontePagadora String? 
-
-  formaFinanciamento TabelaFormaFinanciamento[] 
-  categoria TabelaCategoria[] 
-  anexo TabelaAnexo[] 
-  orgao TabelaOrgao[] 
-  situacaoFuncional TabelaSituacaoFuncional[] 
-  cargo TabelaCargo[] 
+  dataInicial DateTime?
+  dataFinal DateTime?
+  tipoLancamento TabelaTipoLancamento[]
+  motivo TabelaMotivo[]
+  contribuiuEnquantoAfastado Boolean?
+  afastamentoDataInicio DateTime?
+  afastamentoDataFim DateTime?
+  afastamentoMotivo TabelaMotivoAfastamento[]
 
   vinculo   Vinculo[]
-}
-
-model TabelaFormaFinanciamento {
-  id                 Int      @id @default(autoincrement())
-
-  valor String?
-  label String?
-
-  cargo Cargo[]
-}
-model TabelaSituacaoFuncional {
-  id                 Int      @id @default(autoincrement())
-
-  valor String?
-  label String?
-
-  cargo Cargo[]
-}
-model TabelaAnexo {
-  id                 Int      @id @default(autoincrement())
-
-  valor String?
-  label String?
-
-  cargo Cargo[]
-}
-
-model TabelaCargo {
-  id                 Int      @id @default(autoincrement())
-
-  valor String?
-  label String?
-
-  cargo Cargo[]
-
-}
-
-model TabelaCategoria {
-  id                 Int      @id @default(autoincrement())
-
-  valor String?
-  label String?
-
-  cargo Cargo[]
-
-  vinculo   Vinculo[]
-}
-
-model TabelaCarreira {
-  id                 Int      @id @default(autoincrement())
-
-  valor String?
-  label String?
-  
-  codigoIntegracao String?
-  extinto Boolean?
-  dataInicio DateTime?
-
-  leis TabelaLeis[]
-}
-
-model TabelaCargos {
-  id                 Int      @id @default(autoincrement())
-
-  valor String?
-  label String?
-
-}
-model TabelaLeis {
-  id                 Int      @id @default(autoincrement())
-
-  valor String?
-  label String?
-  numero String?
-  ano String?
-  dataPublicacao DateTime?
-  dataInicioVigencia DateTime?
-  fundamentacaoLegal String?
-  ementa String?
-  atoAnexado Boolean?
-
-  carreira TabelaCarreira[]
-  tipoAto TabelaTipoAto[]
-  ambito TabelaAmbito[]
-}
-
-model TabelaTipoAto {
-  id                 Int      @id @default(autoincrement())
-
-  valor String?
-  label String?
-
-  leis TabelaLeis[]
-}
-
-model TabelaAmbito {
-  id                 Int      @id @default(autoincrement())
-
-  valor String?
-  label String?
-
-  leis TabelaLeis[]
-}
-
-model TabelaOrgao {
-  id                 Int      @id @default(autoincrement())
-
-  valor String?
-  label String?
-  cnpj String?
-  responsavel String?
-  arrecadadora Boolean?
-  fontePagadora Boolean?
-
-  vinculoFonte   Vinculo[] @relation(name: "LotacaoOrgao")
-  
-  vinculoLotacao   Vinculo[] @relation(name: "FonteOrgao")
-
-
-  orgaoPoder   TabelaOrgaoPoder[]
-
-  orgaoNivel   TabelaOrgaoNivel[]
-  
-  cargo Cargo[]
-}
-
-model TabelaOrgaoPoder {
-  id                 Int      @id @default(autoincrement())
-
-  valor String?
-  label String?
-
-  orgao   TabelaOrgao[]
-}
-
-model TabelaOrgaoNivel {
-  id                 Int      @id @default(autoincrement())
-
-  valor String?
-  label String?
-
-  orgao   TabelaOrgao[]
-}
-
-model TabelaMotivo {
-  id                 Int      @id @default(autoincrement())
-
-  valor String?
-  label String?
-
-  ocorrencias   Ocorrencias[]
-}
-model TabelaMotivoAfastamento {
-  id                 Int      @id @default(autoincrement())
-
-  valor String?
-  label String?
-
-  ocorrencias   Ocorrencias[]
-}
-model TabelaTipoLancamento {
-  id                 Int      @id @default(autoincrement())
-
-  valor String?
-  label String?
-
-  ocorrencias   Ocorrencias[]
 }
 
 
@@ -641,131 +392,337 @@ model Gratificacao {
   vinculo   Vinculo[]
 }
 
-model TabelaTipoReferencia {
+
+model Cargo {
+  id Int @id @default(autoincrement())
+
+  matricula             String?
+  dataAdmissao          DateTime?
+  dataSituacaoFuncional DateTime?
+
+  optantePrevidenciaComplementar Boolean?
+  fontePagadora                  String?
+
+  formaFinanciamento TabelaFormaFinanciamento[]
+  categoria          TabelaCategoria[]
+  anexo              TabelaAnexo[]
+  orgao              TabelaOrgao[]
+  situacaoFuncional  TabelaSituacaoFuncional[]
+  cargo              TabelaCargo[]
+
+  vinculo Vinculo[]
+}
+
+model TabelaFormaFinanciamento {
+  id Int @id @default(autoincrement())
+
+  valor String?
+  label String?
+
+  cargo Cargo[]
+}
+
+model TabelaSituacaoFuncional {
+  id Int @id @default(autoincrement())
+
+  valor String?
+  label String?
+
+  cargo Cargo[]
+}
+
+model TabelaAnexo {
+  id Int @id @default(autoincrement())
+
+  valor String?
+  label String?
+
+  cargo Cargo[]
+}
+
+model TabelaCargo {
+  id Int @id @default(autoincrement())
+
+  valor String?
+  label String?
+
+  cargo Cargo[]
+}
+
+model TabelaCategoria {
+  id Int @id @default(autoincrement())
+
+  valor String?
+  label String?
+
+  cargo Cargo[]
+
+  vinculo Vinculo[]
+}
+
+model TabelaCarreira {
+  id Int @id @default(autoincrement())
+
+  valor String?
+  label String?
+
+  codigoIntegracao String?
+  extinto          Boolean?
+  dataInicio       DateTime?
+
+  leis TabelaLeis[]
+}
+
+model TabelaCargos {
+  id Int @id @default(autoincrement())
+
+  valor String?
+  label String?
+}
+
+model TabelaLeis {
+  id Int @id @default(autoincrement())
+
+  valor              String?
+  label              String?
+  numero             String?
+  ano                String?
+  dataPublicacao     DateTime?
+  dataInicioVigencia DateTime?
+  fundamentacaoLegal String?
+  ementa             String?
+  atoAnexado         Boolean?
+
+  carreira TabelaCarreira[]
+  tipoAto  TabelaTipoAto[]
+  ambito   TabelaAmbito[]
+}
+
+model TabelaTipoAto {
+  id Int @id @default(autoincrement())
+
+  valor String?
+  label String?
+
+  leis TabelaLeis[]
+}
+
+model TabelaAmbito {
+  id Int @id @default(autoincrement())
+
+  valor String?
+  label String?
+
+  leis TabelaLeis[]
+}
+
+model TabelaOrgao {
+  id Int @id @default(autoincrement())
+
+  valor         String?
+  label         String?
+  cnpj          String?
+  responsavel   String?
+  arrecadadora  Boolean?
+  fontePagadora Boolean?
+
+  vinculoFonte Vinculo[] @relation(name: "LotacaoOrgao")
+
+  vinculoLotacao Vinculo[] @relation(name: "FonteOrgao")
+
+  orgaoPoder TabelaOrgaoPoder[]
+
+  orgaoNivel TabelaOrgaoNivel[]
+
+  cargo Cargo[]
+}
+
+model TabelaOrgaoPoder {
+  id Int @id @default(autoincrement())
+
+  valor String?
+  label String?
+
+  orgao TabelaOrgao[]
+}
+
+model TabelaOrgaoNivel {
+  id Int @id @default(autoincrement())
+
+  valor String?
+  label String?
+
+  orgao TabelaOrgao[]
+}
+
+model TabelaMotivo {
   id                 Int      @id @default(autoincrement())
 
   valor String?
   label String?
 
-  gratificao Gratificacao[]
+  ocorrencias   Ocorrencias[]
 }
-
-model TabelaVerba {
-  id                 Int      @id @default(autoincrement())
-
-  valor String?
-  label String?
-
-  gratificacao   Gratificacao[]
-}
-
-model Ocorrencias {
-  id                 Int      @id @default(autoincrement())
-
-  dataInicial DateTime?
-  dataFinal DateTime?
-  tipoLancamento TabelaTipoLancamento[]
-  motivo TabelaMotivo[]
-  contribuiuEnquantoAfastado Boolean?
-  afastamentoDataInicio DateTime?
-  afastamentoDataFim DateTime?
-  afastamentoMotivo TabelaMotivoAfastamento[]
-
-  vinculo   Vinculo[]
-}
-
 
 model Dependente {
-  id                 Int      @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
-  cid String?
-  cidDataLaudo DateTime?
-  cidDataInicio DateTime?
+  dataInicioDependencia DateTime?
+  dataFimDependencia    DateTime?
+  matricula             String?
+  irrf                  Boolean?
+  previdenciario        Boolean?
 
-  pessoaDependente   Pessoa[] @relation(name: "PessoaDependente")
-  pessoaTitular Pessoa[] @relation(name: "PessoaDependenteTitular")
+  pessoaDependente Pessoa[] @relation(name: "PessoaDependente")
+  pessoaTitular    Pessoa[] @relation(name: "PessoaDependenteTitular")
 
-  dependenteTipo DependenteParentesco[]
-  dependenteParentesco DependenteCondicao[]
+  tipoDependencia   TabelaAuxiliarTipoDependencia[]
+  motivoDependencia TabelaAuxiliarMotivoDependencia[]
+  condicao          TabelaAuxiliarCondicao[]
 }
 
-model DependenteParentesco {
-  id                 Int      @id @default(autoincrement())
+model TabelaAuxiliarVerba {
+  id Int @id @default(autoincrement())
 
   valor String?
   label String?
-
-  dependente   Dependente[]
 }
 
-model DependenteCondicao {
-  id                 Int      @id @default(autoincrement())
+model TabelaAuxiliarUF {
+  id Int @id @default(autoincrement())
 
-  valor String?
-  label String?
+  valor      String?
+  label      String?
+  Pessoa     Pessoa[]
+  Endereco   Endereco[]
+  RG         RG[]
+  CTPS       CTPS[]
+}
 
-  dependente   Dependente[]
+model TabelaAuxiliarEstadoCivil {
+  id Int @id @default(autoincrement())
+
+  valor    String?
+  label    String?
+  Pessoa   Pessoa[]
+}
+
+model TabelaAuxiliarRaca {
+  id Int @id @default(autoincrement())
+
+  valor    String?
+  label    String?
+  Pessoa   Pessoa[]
+}
+
+model TabelaAuxiliarEscolaridade {
+  id Int @id @default(autoincrement())
+
+  valor    String?
+  label    String?
+  Pessoa   Pessoa[]
 }
 
 model TabelaAuxiliarNacionalidade {
-      id                 Int      @id @default(autoincrement())
-    valor String?
-    label String?
+  id Int @id @default(autoincrement())
+
+  valor    String?
+  label    String?
+  Pessoa   Pessoa[]
 }
-model TabelaAuxiliarUF  {
-      id                 Int      @id @default(autoincrement())
-    valor String?
-    label String?
-}
-model TabelaAuxiliarRaca {
-      id                 Int      @id @default(autoincrement())
-    valor String?
-    label String?
-}
+
 model TabelaAuxiliarNaturalidade {
-      id                 Int      @id @default(autoincrement())
-    valor String?
-    label String?
+  id Int @id @default(autoincrement())
+
+  valor    String?
+  label    String?
+  Pessoa   Pessoa[]
 }
-model TabelaAuxiliarEscolaridade {
-      id                 Int      @id @default(autoincrement())
-    valor String?
-    label String?
-}
-model TabelaAuxiliarEstadoCivil {
-      id                 Int      @id @default(autoincrement())
-    valor String?
-    label String?
-}
+
 model TabelaAuxiliarRegimeCasamento {
-      id                 Int      @id @default(autoincrement())
-    valor String?
-    label String?
+  id Int @id @default(autoincrement())
+
+  valor    String?
+  label    String?
+  Pessoa   Pessoa[]
 }
-model TabelaAuxiliarOrgao {
-      id                 Int      @id @default(autoincrement())
-    valor String?
-    label String?
-}
+
 model TabelaAuxiliarTipoLogradouro {
-      id                 Int      @id @default(autoincrement())
-    valor String?
-    label String?
+  id Int @id @default(autoincrement())
+
+  valor      String?
+  label      String?
+  Endereco   Endereco[]
 }
+
 model TabelaAuxiliarCidade {
-      id                 Int      @id @default(autoincrement())
-    valor String?
-    label String?
+  id Int @id @default(autoincrement())
+
+  valor      String?
+  label      String?
+  Endereco   Endereco[]
 }
+
 model TabelaAuxiliarPais {
-      id                 Int      @id @default(autoincrement())
-    valor String?
-    label String?
+  id Int @id @default(autoincrement())
+
+  valor      String?
+  label      String?
+  Endereco   Endereco[]
 }
+
 model TabelaAuxiliarFormaPagamento {
-      id                 Int      @id @default(autoincrement())
-    valor String?
-    label String?
+  id Int @id @default(autoincrement())
+
+  valor        String?
+  label        String?
+  ContaBanco   ContaBanco[]
+  ContaPix     ContaPix[]
+}
+
+model TabelaAuxiliarBanco {
+  id Int @id @default(autoincrement())
+
+  valor String?
+  label String?
+}
+
+model TabelaAuxiliarOrgao {
+  id Int @id @default(autoincrement())
+
+  valor String?
+  label String?
+}
+
+model TabelaAuxiliarTipoDependencia {
+  id Int @id @default(autoincrement())
+
+  valor        String?
+  label        String?
+  Dependente   Dependente[]
+}
+
+model TabelaAuxiliarCondicao {
+  id Int @id @default(autoincrement())
+
+  valor        String?
+  label        String?
+  Dependente   Dependente[]
+}
+
+model TabelaAuxiliarTipoRepresentante {
+  id Int @id @default(autoincrement())
+
+  valor String?
+  label String?
+}
+
+model TabelaAuxiliarMotivoDependencia {
+  id           Int         @id @default(autoincrement())
+  valor        String?
+  label        String?
+  tipo         String? // Inicio, Fim
+  Dependente   Dependente[]
 }
 
 model TabelaAuxiliarMotivo {
@@ -774,29 +731,6 @@ model TabelaAuxiliarMotivo {
         label String?
 }
 
-model TabelaAuxiliarMotivoDependencia {
-        id                 Int      @id @default(autoincrement())
-        valor String?
-        label String?
-        // Inicio, Fim
-        tipo String?
-}
-
-model TabelaAuxiliarTipoDependencia {
-            id                 Int      @id @default(autoincrement())
-        valor String?
-        label String?
-}
-model TabelaAuxiliarCondicao {
-            id                 Int      @id @default(autoincrement())
-        valor String?
-        label String?
-}
-model TabelaAuxiliarTipoRepresentante {
-            id                 Int      @id @default(autoincrement())
-        valor String?
-        label String?
-}
 model TabelaAuxiliarCategoria {
             id                 Int      @id @default(autoincrement())
         valor String?
@@ -823,11 +757,6 @@ model TabelaAuxiliarCargo {
         label String?
 }
 model TabelaAuxiliarTipoReferencia {
-            id                 Int      @id @default(autoincrement())
-        valor String?
-        label String?
-}
-model TabelaAuxiliarVerba {
             id                 Int      @id @default(autoincrement())
         valor String?
         label String?
@@ -881,4 +810,39 @@ model TabelaAuxiliarTipoContribuicao {
             id                 Int      @id @default(autoincrement())
         valor String?
         label String?
+}
+
+model TabelaMotivoAfastamento {
+  id                 Int      @id @default(autoincrement())
+
+  valor String?
+  label String?
+
+  ocorrencias   Ocorrencias[]
+}
+model TabelaTipoLancamento {
+  id                 Int      @id @default(autoincrement())
+
+  valor String?
+  label String?
+
+  ocorrencias   Ocorrencias[]
+}
+
+model TabelaTipoReferencia {
+  id                 Int      @id @default(autoincrement())
+
+  valor String?
+  label String?
+
+  gratificao Gratificacao[]
+}
+
+model TabelaVerba {
+  id                 Int      @id @default(autoincrement())
+
+  valor String?
+  label String?
+
+  gratificacao   Gratificacao[]
 }

@@ -50,7 +50,9 @@ generatorHandler({
 
 
     options.dmmf.datamodel.models.forEach(async (model) => {
-      if(model.name.toLowerCase() != 'TabelaAuxiliarVerba'.toLowerCase()) {
+      if(
+        model.name.toLowerCase() != 'ContaPix'.toLowerCase()
+        ) {
         return;
       }
 
@@ -65,7 +67,7 @@ generatorHandler({
       // Dto Classes
       classes.forEach(cls => {
         writeTSClass({
-          outputPath: options.generator.output?.value!,
+          outputPath: options.generator.output?.value! + '/client',
           cls,
           model,
         })
@@ -73,31 +75,31 @@ generatorHandler({
 
       classes.forEach(cls => {
         genClassIndexDto({
-          outputPath: options.generator.output?.value!,
+          outputPath: options.generator.output?.value!   + '/client',
           exports: `./${model.name.toLowerCase()}/${cls.name}.dto`
         })
       })
 
       // Response Classes
       genClassIndexDto({
-        outputPath: options.generator.output?.value!,
+        outputPath: options.generator.output?.value!   + '/client',
         exports: `./${model.name.toLowerCase()}/${model.name}Responses.dto`
       })
-      generateResponseClasses(model.name, options.generator.output?.value!)
+      generateResponseClasses(model.name, options.generator.output?.value!  + '/client')
 
       // Identifiers Classes
       genClassIndexDto({
-        outputPath: options.generator.output?.value!,
+        outputPath: options.generator.output?.value!   + '/client',
         exports: `./${model.name.toLowerCase()}/${model.name}Identifiers.dto`
       })
-      generateIdentifiersClasses(model.name, options.generator.output?.value!)
+      generateIdentifiersClasses(model.name, options.generator.output?.value!  + '/client')
 
       // Controller Class
-      generateControllerFile(model.name, options.generator.output?.value!)
+      generateControllerFile(model.name, options.generator.output?.value! + '/service')
 
       // // Services
       generateServices({
-        outputPath: options.generator.output?.value!,
+        outputPath: options.generator.output?.value! + '/service',
         model,
         createCLS,
         deleteCLS,
@@ -108,25 +110,25 @@ generatorHandler({
 
       // // Module
       genClassIndexDto({
-        outputPath: options.generator.output?.value!,
+        outputPath: options.generator.output?.value!  + '/service',
         exports: `./${model.name.toLowerCase()}/${model.name.toLowerCase()}.module`
       })
-      generateModuleFile(model.name, options.generator.output?.value!)
+      generateModuleFile(model.name, options.generator.output?.value! + '/service')
 
       // // Gateway
       genClassIndexDto({
-        outputPath: options.generator.output?.value!,
-        exports: `./${model.name.toLowerCase()}/${model.name.toLowerCase()}.gateway`
+        outputPath: options.generator.output?.value! + '/gateway',
+        exports: `./${model.name.toLowerCase()}/${model.name.toLowerCase()}-gateway.controller`
       })
-      generateGatewayControllerFile(model.name, options.generator.output?.value!)
+      generateGatewayControllerFile(model.name, options.generator.output?.value! + '/gateway')
 
 
       // // Proxy
       genClassIndexDto({
-        outputPath: options.generator.output?.value!,
+        outputPath: options.generator.output?.value!   + '/client',
         exports: `./${model.name.toLowerCase()}/${model.name}Client.proxy`
       })
-      generateDependenteClientProxy(model.name, options.generator.output?.value!)
+      generateDependenteClientProxy(model.name, options.generator.output?.value!  + '/client')
     })
   },
 })

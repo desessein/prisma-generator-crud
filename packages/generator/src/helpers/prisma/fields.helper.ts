@@ -6,6 +6,7 @@ export function mapFieldTypeToTypescriptType(type: FieldType) {
     switch (type) {
         case 'BigInt':
         case 'Int':
+        case 'Float':
             return 'number'
         case 'Boolean':
             return 'boolean'
@@ -13,7 +14,6 @@ export function mapFieldTypeToTypescriptType(type: FieldType) {
         case 'Date':
         case 'Time':
         case 'Decimal':
-        case 'Float':
         case 'JSON':
         case 'String':
         case ' $ModelName':
